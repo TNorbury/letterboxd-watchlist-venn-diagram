@@ -9,8 +9,15 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/src/app.ts",
+            "args": [
+                "--users",
+                "tylernorbury",
+                "tylernorbury"
+            ],
             "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": ["${workspaceFolder}/lib/**/*.js"]
+            "outFiles": [
+                "${workspaceFolder}/lib/**/*.js"
+            ],
         }
     ]
 }
