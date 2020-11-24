@@ -15,10 +15,10 @@ It's also required that you have tsc (or ts-node) installed globally.
 
 #### ts-node installed
 
-`npx ts-node src/app.ts --users userOne userTwo`
+`npx ts-node src/app.ts --users userOne userTwo ... userN`
 
-where `userOne` and `userTwo` are the two users you want to compare.
+where `userOne`, `userTwo`, all the ways up to `userN` are the users you want to compare.
 
 ## Notes
 
-Both user's watchlists have to be public.
+All user's watchlists have to be public.

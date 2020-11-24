@@ -14,34 +14,44 @@ async function main() {
     },
   }).argv;
 
-  if (argv.users.length != 2) {
-    return console.log("You must specify two users!");
+  if (argv.users.length < 2) {
+    return console.log("You must specify at least two users!");
   }
 
-  let userOne = argv.users[0] as string;
-  let userTwo = argv.users[1] as string;
-  const userOneTitles = await getUsersWatchList(userOne);
-  const userTwoTitles = await getUsersWatchList(userTwo);
+  let userTitles: Array<Array<string>> = [];
 
-  // This is for optimizing: only iterate over the shortest list
-  let shortList: string[] = userOneTitles;
-  let longList: string[] = userTwoTitles;
-  if (userOneTitles.length <= userTwoTitles.length) {
-    shortList = userOneTitles;
-    longList = userTwoTitles;
-  } else {
-    shortList = userTwoTitles;
-    longList = userOneTitles;
+  // Get the titles for all of the users
+  for (var user of argv.users) {
+    const titles = await getUsersWatchList(user as string);
+    userTitles.push(titles);
   }
 
   let venn: string[] = [];
-  shortList.forEach((title: string) => {
-    if (longList.includes(title)) {
+
+  // We'll iterate over the first user's list of titles, comparing it the the
+  // others
+  let firstList = userTitles.splice(0, 1)[0];
+
+  // for every title, we'll see if every other user's list contains that title
+  firstList.forEach((title) => {
+    let commonTitle = true;
+
+    for (var userList of userTitles) {
+      // If there is a user that doesn't have this movie in their watch list
+      // then it isn't a common title
+      if (!userList.includes(title)) {
+        commonTitle = false;
+        break;
+      }
+    }
+
+    // However, if the title is common, we'll add it to the venn
+    if (commonTitle) {
       venn.push(title);
     }
   });
 
-  console.log(`\nThe watchlist venn diagram for ${userOne} and ${userTwo} is:`);
+  console.log(`\nThe watchlist venn diagram for ${argv.users.join(", ")} is:`);
   venn.forEach((title: string) => {
     console.log(title);
   });

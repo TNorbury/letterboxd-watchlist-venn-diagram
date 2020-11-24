@@ -12,7 +12,8 @@
             "args": [
                 "--users",
                 "tylernorbury",
-                "tylernorbury"
+                "missyledoux",
+                "gabrielaelkins"
             ],
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
